@@ -34,6 +34,8 @@ import org.eclipse.edc.spi.result.Result;
 import org.eclipse.tractusx.edc.iam.iatp.sts.dim.oauth.DimOauth2Client;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -105,7 +107,11 @@ public class DimSecureTokenService implements SecureTokenService {
         return grantAccessPayload(claims, bearerAccessScope)
                 .compose(this::postRequest)
                 .map(builder -> builder.url(dimUrl).build())
-                .compose(request -> executeRequest(request, GRANT_ACCESS));
+                .compose(request -> {
+                    System.out.println("grantAccessRequest :: Request: " + request);
+//                    return executeRequest(request, GRANT_ACCESS);
+                    return Result.success(TokenRepresentation.Builder.newInstance().token("tokenFromDim").expiresIn(15000L).build());
+                });
     }
 
     private Result<TokenRepresentation> signTokenRequest(Map<String, String> claims) {
@@ -122,6 +128,7 @@ public class DimSecureTokenService implements SecureTokenService {
                         .compose(i -> Result.success(payload)))
                 .map(payload -> {
                     payload.put(SCOPE, READ_SCOPE);
+                    System.out.println("------------ payload :" + payload);
                     return Map.of(GRANT_ACCESS, payload);
                 });
     }

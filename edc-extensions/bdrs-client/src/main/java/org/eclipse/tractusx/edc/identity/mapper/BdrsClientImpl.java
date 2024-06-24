@@ -159,7 +159,10 @@ class BdrsClientImpl implements BdrsClient {
         var scope = TxIatpConstants.DEFAULT_MEMBERSHIP_SCOPE;
 
         return secureTokenService.createToken(claims, scope)
-                .compose(sit -> credentialServiceClient.requestPresentation(ownCredentialServiceUrl.get(), sit.getToken(), List.of(scope)))
+                .compose(sit -> {
+                    System.out.println("ownCredentialServiceUrl : " + ownCredentialServiceUrl.get() + ", token : " + sit.getToken() + ", scopes : " + scope);
+                    return credentialServiceClient.requestPresentation(ownCredentialServiceUrl.get(), sit.getToken(), List.of(scope));
+                })
                 .compose(pres -> {
                     if (pres.isEmpty()) {
                         return Result.failure("Expected exactly 1 VP, but was empty");

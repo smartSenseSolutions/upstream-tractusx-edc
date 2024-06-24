@@ -95,7 +95,7 @@ include(":samples:multi-tenancy")
 include(":samples:testing-with-mocked-connector")
 include(":samples:edc-dast:edc-dast-runtime")
 include(":samples:edc-dast:edc-dast-extensions")
-
+include(":samples:testing")
 
 // this is needed to have access to snapshot builds of plugins
 pluginManagement {
