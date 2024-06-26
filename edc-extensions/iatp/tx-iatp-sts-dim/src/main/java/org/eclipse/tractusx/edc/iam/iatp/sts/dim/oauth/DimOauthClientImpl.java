@@ -82,9 +82,8 @@ public class DimOauthClientImpl implements DimOauth2Client {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-//        return request.compose(oauth2Client::requestToken);
-        TokenRepresentation.Builder builder = TokenRepresentation.Builder.newInstance();
-        return Result.success(builder.token("abcd").expiresIn(1500000L).build());
+  return request.compose(oauth2Client::requestToken);
+
     }
 
     private boolean isExpired() {

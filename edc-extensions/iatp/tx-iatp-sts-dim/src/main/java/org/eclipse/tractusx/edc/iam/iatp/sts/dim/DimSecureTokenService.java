@@ -109,8 +109,8 @@ public class DimSecureTokenService implements SecureTokenService {
                 .map(builder -> builder.url(dimUrl).build())
                 .compose(request -> {
                     System.out.println("grantAccessRequest :: Request: " + request);
-//                    return executeRequest(request, GRANT_ACCESS);
-                    return Result.success(TokenRepresentation.Builder.newInstance().token("tokenFromDim").expiresIn(15000L).build());
+  return executeRequest(request, GRANT_ACCESS);
+
                 });
     }
 
